@@ -12,8 +12,8 @@ const webFrontendURL = appConfig.frontendURL;
 
 app.use(
   cors({
-    origin: webFrontendURL,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    origin: "*",
+    methods: ["POST"],
     exposedHeaders: [
       serverConstant.AUTHORIZATION_HEADER_KEY,
       serverConstant.EMAIL_SERVER_API_KEY,

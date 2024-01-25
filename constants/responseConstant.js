@@ -44,6 +44,8 @@ const responseConstant = {
 
   API_KEY_INVALID: "Invalid API key.",
   API_KEY_VALID: "Valid API key.",
+  API_KEY_GENERATED: "API key generated successfully.",
+  API_KEY_NOT_GENERATED: "Failed to generate API key.",
 
   USER_NOT_FOUND: "Unable to find your account. Please sign up.",
   PROVIDE_VALID_CREDENTIALS: "Please provide valid credentials.",
