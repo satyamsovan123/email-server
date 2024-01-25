@@ -1,7 +1,7 @@
-const Data = require("./Data");
 const User = require("./User");
+const Email = require("./Email");
 
 module.exports = {
-  Data,
   User,
+  Email,
 };

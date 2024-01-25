@@ -2,14 +2,15 @@ const { verifyJWT } = require("./verifyJWT");
 const {
   verifyAuthenticationDataRequest,
 } = require("./verifyAuthenticationRequest");
-const { verifyAddDataRequest } = require("./verifyAddDataRequest");
-const { verifyUpdateDataRequest } = require("./verifyUpdateDataRequest");
-const { verifyGetByIdRequest } = require("./verifyGetByIdRequest");
+
+const { verifyAPIKey } = require("./verifyAPIKey");
+const { verifyOTPRequest } = require("./verifyOTPRequest");
+const { verifyCampaignEmail } = require("./verifyCampaignEmail");
 
 module.exports = {
   verifyJWT,
-  verifyGetByIdRequest,
-  verifyAddDataRequest,
   verifyAuthenticationDataRequest,
-  verifyUpdateDataRequest,
+  verifyAPIKey,
+  verifyOTPRequest,
+  verifyCampaignEmail,
 };

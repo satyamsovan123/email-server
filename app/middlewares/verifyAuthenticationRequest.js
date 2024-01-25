@@ -1,9 +1,6 @@
 const { responseConstant, statusCodeConstant } = require("../../constants");
-const { logger } = require("../../utils");
+const { logger, checkExistingUser } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
-const {
-  checkExistingUser,
-} = require("../controllers/authentication/utils/authenticationHelper");
 const { AuthenticationValidator } = require("../validators");
 
 const verifyAuthenticationDataRequest = async (req, res, next) => {
@@ -15,6 +12,8 @@ const verifyAuthenticationDataRequest = async (req, res, next) => {
       userData
     ).getValidationResult();
     if (dataValidationResult) {
+      logger(dataValidationResult);
+
       const generatedResponse = responseBuilder(
         {},
         dataValidationResult,
@@ -43,6 +42,7 @@ const verifyAuthenticationDataRequest = async (req, res, next) => {
     } else if (existingUser && currentPath === "signin") {
       logger("Inside signin and user exist");
       req.body["hashedPassword"] = existingUser.password;
+      req.body["apiKey"] = existingUser.apiKey;
     }
     next();
   } catch (error) {

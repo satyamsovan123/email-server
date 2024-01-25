@@ -1,18 +1,16 @@
 const { responseConstant, statusCodeConstant } = require("../../constants");
-const { logger } = require("../../utils");
+const { logger, checkExistingOTP } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
+const { OTPValidator } = require("../validators");
 
-const { GetByIdValidator } = require("../validators");
-
-const verifyGetByIdRequest = async (req, res, next) => {
+const verifyOTPRequest = async (req, res, next) => {
   try {
     const userData = req.body;
-
-    const dataValidationResult = await new GetByIdValidator(
+    const dataValidationResult = await new OTPValidator(
       userData
     ).getValidationResult();
-    logger(dataValidationResult);
     if (dataValidationResult) {
+      logger(dataValidationResult);
       const generatedResponse = responseBuilder(
         {},
         dataValidationResult,
@@ -32,4 +30,4 @@ const verifyGetByIdRequest = async (req, res, next) => {
   }
 };
 
-module.exports = { verifyGetByIdRequest };
+module.exports = { verifyOTPRequest };

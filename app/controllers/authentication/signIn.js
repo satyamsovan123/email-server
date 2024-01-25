@@ -6,8 +6,7 @@ const {
   serverConstant,
 } = require("../../../constants");
 
-const { generateJWT } = require("./utils/authenticationHelper");
-const { compareEncryptedText } = require("../../../utils");
+const { compareEncryptedText, generateJWT } = require("../../../utils");
 
 const signIn = async (req, res) => {
   try {
@@ -24,10 +23,9 @@ const signIn = async (req, res) => {
       );
       return res.status(generatedResponse.code).send(generatedResponse);
     }
-
     const token = await generateJWT({ email: userData.email });
     const generatedResponse = responseBuilder(
-      {},
+      { apiKey: userData.apiKey },
       responseConstant.SIGN_IN_SUCCESS,
       statusCodeConstant.SUCCESS
     );

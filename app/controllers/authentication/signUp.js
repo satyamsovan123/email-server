@@ -6,23 +6,28 @@ const {
   serverConstant,
 } = require("../../../constants");
 const { User } = require("../../models");
-const { generateJWT } = require("./utils/authenticationHelper");
-const { excryptPlainText } = require("../../../utils");
+const {
+  excryptPlainText,
+  generateJWT,
+  generateAPIKey,
+} = require("../../../utils");
 
 const signUp = async (req, res) => {
   try {
     const userData = req.body;
 
+    const apiKey = generateAPIKey();
     const encryptedPassword = await excryptPlainText(userData.password);
     const newUser = new User({
       email: userData.email,
       password: encryptedPassword,
+      apiKey: apiKey,
     });
     await User.create(newUser);
 
     const token = await generateJWT({ email: userData.email });
     const generatedResponse = responseBuilder(
-      {},
+      { apiKey: apiKey },
       responseConstant.SIGN_UP_SUCCESS,
       statusCodeConstant.SUCCESS
     );

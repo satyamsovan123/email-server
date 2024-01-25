@@ -32,6 +32,19 @@ const responseConstant = {
 
   USER_ALREADY_EXISTS: "An account already exists.",
 
+  VERIFICATION_CODE_SENT: "Verification code sent successfully.",
+  VERIFICATION_CODE_NOT_SENT: "Failed to send verification code.",
+  VERIFICATION_CODE_VALID: "Verification code validated successfully.",
+  VERIFICATION_CODE_INVALID: "Failed to validate verification code.",
+  VERIFICATION_CODE_EXPIRED: "Verification code expired.",
+  FAILED_TO_VALIDATE_CODE: "Failed to validate code.",
+
+  EMAIL_SENT: "Email sent successfully.",
+  EMAIL_NOT_SENT: "Failed to send email.",
+
+  API_KEY_INVALID: "Invalid API key.",
+  API_KEY_VALID: "Valid API key.",
+
   USER_NOT_FOUND: "Unable to find your account. Please sign up.",
   PROVIDE_VALID_CREDENTIALS: "Please provide valid credentials.",
   PROVIDE_VALID_DATA: "Please provide valid data.",
@@ -41,6 +54,7 @@ const responseConstant = {
   ERROR_OCCURRED_WHILE_VERIFYING: "Error occurred while verifying data.",
 
   IS_REQUIRED: "is required.",
+  CANNOT_BE_SAME: "cannot be same.",
   IS_EMPTY: "is empty.",
   IS_INVALID: "is invalid.",
   SHOULD_HAVE: "should have",

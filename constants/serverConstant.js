@@ -7,6 +7,7 @@ const serverConstant = {
   DATABASE_CONNECTION_ERROR: "Unable to connect to database.",
   DATABASE_CONNECTION_SUCCESS: "Connected to database.",
   BASE_API: "/api",
+  EMAIL_SERVER_API_KEY: "email-server-api-key",
 };
 
 module.exports = { serverConstant };
