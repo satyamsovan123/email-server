@@ -1,18 +1,14 @@
 const { logger } = require("../../../utils/logger");
 const { responseBuilder } = require("../../../utils/responseBuilder");
-const short = require("short-uuid");
-const {
-  statusCodeConstant,
-  responseConstant,
-  serverConstant,
-} = require("../../../constants");
+const { statusCodeConstant, responseConstant } = require("../../../constants");
 
 const { User } = require("../../models");
+const { generateAPIKey } = require("../../../utils");
 
 const changeAPIKey = async (req, res) => {
   try {
     const userData = req.body;
-    const apiKey = short.generate();
+    const apiKey = generateAPIKey();
 
     const updatedUser = await User.findOneAndUpdate(
       { email: userData.email },

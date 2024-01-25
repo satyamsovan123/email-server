@@ -1,5 +1,5 @@
 const { responseConstant, statusCodeConstant } = require("../../constants");
-const { logger, checkExistingOTP } = require("../../utils");
+const { logger } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
 const { OTPValidator } = require("../validators");
 

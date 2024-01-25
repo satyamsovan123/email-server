@@ -5,7 +5,6 @@ const {
 } = require("../../constants");
 const { logger, checkExistingAPIKey } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
-const jwt = require("jsonwebtoken");
 
 const verifyAPIKey = async (req, res, next) => {
   try {
