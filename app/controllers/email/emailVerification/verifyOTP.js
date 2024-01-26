@@ -23,12 +23,6 @@ const verifyOTP = async (req, res) => {
       appName: userData.appName,
     });
 
-    // const existingData = await checkExistingOTP(
-    //   userData.sender,
-    //   userData.receiver,
-    //   userData.appName
-    // );
-
     if (!existingData) {
       logger(["No existing OTP"]);
       const generatedResponse = responseBuilder(
