@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const { appConstant, responseConstant } = require("../../constants");
+const { logger } = require("../../utils");
 
 class AuthenticationValidator {
   constructor(data = {}) {
@@ -33,6 +34,7 @@ class AuthenticationValidator {
     try {
       await this.validationResult;
     } catch (error) {
+      logger(["Error in authentication validator", error]);
       return error?.message ?? responseConstant.ERROR_OCCURRED_WHILE_VERIFYING;
     }
   }

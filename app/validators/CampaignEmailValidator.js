@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const { appConstant, responseConstant } = require("../../constants");
+const { logger } = require("../../utils");
 
 class CampaignEmailValidator {
   constructor(data = {}) {
@@ -77,6 +78,7 @@ class CampaignEmailValidator {
     try {
       await this.validationResult;
     } catch (error) {
+      logger(["Error in campaign email validator", error]);
       return error?.message ?? responseConstant.ERROR_OCCURRED_WHILE_VERIFYING;
     }
   }

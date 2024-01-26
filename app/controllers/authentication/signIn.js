@@ -10,12 +10,14 @@ const { compareEncryptedText, generateJWT } = require("../../../utils");
 
 const signIn = async (req, res) => {
   try {
+    logger(["Inside sign in"]);
     const userData = req.body;
     const isPasswordValid = await compareEncryptedText(
       userData.password,
       userData.hashedPassword
     );
     if (!isPasswordValid) {
+      logger(["Invalid password"]);
       const generatedResponse = responseBuilder(
         {},
         responseConstant.PROVIDE_VALID_CREDENTIALS,
@@ -29,6 +31,7 @@ const signIn = async (req, res) => {
       responseConstant.SIGN_IN_SUCCESS,
       statusCodeConstant.SUCCESS
     );
+    logger(["Token generated - ", token, "API key - ", userData.apiKey]);
     return res
       .setHeader(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`)
       .status(generatedResponse.code)
@@ -39,7 +42,7 @@ const signIn = async (req, res) => {
       responseConstant.SIGN_IN_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(["signin", generatedResponse, error]);
+    logger(["Error in signin", generatedResponse, error]);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

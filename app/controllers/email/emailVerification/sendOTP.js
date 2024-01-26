@@ -14,6 +14,8 @@ const { Email } = require("../../../models");
 const { emailSender } = require("../utils/emailSender");
 const sendOTP = async (req, res) => {
   try {
+    logger(["Inside send OTP"]);
+
     const userData = req.body;
 
     const otp = Math.floor(100000 + Math.random() * 900000);
@@ -26,34 +28,35 @@ const sendOTP = async (req, res) => {
       userData.appName
     );
 
-    const existingData = await checkExistingOTP(
-      userData.sender,
-      userData.receiver,
-      userData.appName
+    logger(["Mail option", mailOptions]);
+
+    const deletedData = await Email.deleteMany({
+      sender: userData.sender,
+      receiver: userData.receiver,
+      appName: userData.appName,
+    });
+
+    if (deletedData) {
+      logger(["Existing OTP deleted"]);
+    }
+
+    const newEmail = await Email.create(
+      new Email({
+        sender: userData.sender,
+        receiver: userData.receiver,
+        otp: encryptedOTP,
+        appName: userData.appName,
+      })
     );
 
-    if (existingData) {
-      logger(["existingData", existingData]);
-      await Email.updateOne({ _id: existingData._id }, { otp: encryptedOTP });
-    } else {
-      logger(["new"]);
-      const newEmail = await Email.create(
-        new Email({
-          sender: userData.sender,
-          receiver: userData.receiver,
-          otp: encryptedOTP,
-          appName: userData.appName,
-        })
+    if (!newEmail) {
+      logger(["Error in creating new OTP"]);
+      const generatedResponse = responseBuilder(
+        {},
+        responseConstant.VERIFICATION_CODE_NOT_SENT,
+        statusCodeConstant.ERROR
       );
-
-      if (!newEmail) {
-        const generatedResponse = responseBuilder(
-          {},
-          responseConstant.VERIFICATION_CODE_NOT_SENT,
-          statusCodeConstant.ERROR
-        );
-        return res.status(generatedResponse.code).send(generatedResponse);
-      }
+      return res.status(generatedResponse.code).send(generatedResponse);
     }
 
     const mail = await emailSender(mailOptions);
@@ -67,8 +70,6 @@ const sendOTP = async (req, res) => {
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
-    logger(["mailOptions", mailOptions]);
-
     const generatedResponse = responseBuilder(
       {},
       responseConstant.VERIFICATION_CODE_SENT,
@@ -81,7 +82,7 @@ const sendOTP = async (req, res) => {
       responseConstant.VERIFICATION_CODE_NOT_SENT,
       statusCodeConstant.ERROR
     );
-    logger(["sendotp", generatedResponse, error]);
+    logger(["Error in send OTP", generatedResponse, error]);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

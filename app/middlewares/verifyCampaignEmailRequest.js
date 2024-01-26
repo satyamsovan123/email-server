@@ -3,8 +3,9 @@ const { logger } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
 const { CampaignEmailValidator } = require("../validators");
 
-const verifyCampaignEmail = async (req, res, next) => {
+const verifyCampaignEmailRequest = async (req, res, next) => {
   try {
+    logger(["Inside verify campaign email middleware"]);
     const userData = req.body;
     const dataValidationResult = await new CampaignEmailValidator(
       userData
@@ -26,8 +27,13 @@ const verifyCampaignEmail = async (req, res, next) => {
       responseConstant.ERROR_OCCURRED_WHILE_VERIFYING,
       statusCodeConstant.ERROR
     );
+    logger([
+      "Error in verify campaign email middleware",
+      generatedResponse,
+      error,
+    ]);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };
 
-module.exports = { verifyCampaignEmail };
+module.exports = { verifyCampaignEmailRequest };

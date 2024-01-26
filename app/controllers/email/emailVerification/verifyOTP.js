@@ -14,14 +14,24 @@ const { Email } = require("../../../models");
 
 const verifyOTP = async (req, res) => {
   try {
+    logger(["Inside verify OTP"]);
     const userData = req.body;
-    const existingData = await checkExistingOTP(
-      userData.sender,
-      userData.receiver,
-      userData.appName
-    );
+
+    const existingData = await Email.findOneAndDelete({
+      sender: userData.sender,
+      receiver: userData.receiver,
+      appName: userData.appName,
+    });
+    console.log(existingData);
+
+    // const existingData = await checkExistingOTP(
+    //   userData.sender,
+    //   userData.receiver,
+    //   userData.appName
+    // );
 
     if (!existingData) {
+      logger(["No existing OTP"]);
       const generatedResponse = responseBuilder(
         {},
         responseConstant.VERIFICATION_CODE_INVALID,
@@ -35,6 +45,7 @@ const verifyOTP = async (req, res) => {
     const verificationResult = await bcrypt.compare(userData.otp, encryptedOTP);
 
     if (!verificationResult) {
+      logger(["Invalid OTP"]);
       const generatedResponse = responseBuilder(
         {},
         responseConstant.VERIFICATION_CODE_INVALID,
@@ -43,17 +54,12 @@ const verifyOTP = async (req, res) => {
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
-    await Email.deleteMany({
-      sender: userData.sender,
-      receiver: userData.receiver,
-      appName: userData.appName,
-    });
-
     const generatedResponse = responseBuilder(
       {},
       responseConstant.VERIFICATION_CODE_VALID,
       statusCodeConstant.SUCCESS
     );
+    logger(["OTP verified", generatedResponse]);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
@@ -61,7 +67,7 @@ const verifyOTP = async (req, res) => {
       responseConstant.FAILED_TO_VALIDATE_CODE,
       statusCodeConstant.ERROR
     );
-    logger(["verifyotp", generatedResponse, error]);
+    logger(["Error in verify otp", generatedResponse, error]);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

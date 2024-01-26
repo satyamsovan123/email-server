@@ -11,8 +11,9 @@ function OTPEmailGenerator(sender, receiver, otp, appName) {
     <p>Hope you are doing well. Thanks for using ${appName}.</p>
     <p>Your OTP (One Time Password) is - <b>${otp}</b>. This OTP (One Time Password) will expire after ${appConfig.expiresAfterMinutes} minutes. Please use it promptly.</p>
     <br>
-    <p>Thanks and regards,
-    <br>${appName} admin</p>
+    <p>Thanks and regards,</p>
+    <p style='text-decoration: none'>${sender}</p>
+    <p>${appName} admin</p>
     `,
   };
   return mailOptions;
@@ -29,8 +30,9 @@ function campaignEmailGenerator(sender, receiver, emailBody, appName) {
     <p>Hope you are doing well. Thanks for using ${appName}.</p>
     <p>${emailBody}</p>
     <br>
-    <p>Thanks and regards,
-    <br>${appName} admin</p>
+    <p>Thanks and regards,</p>
+    <p style='text-decoration: none'>${sender}</p>
+    <p>${appName} admin</p>
     `,
   };
   return mailOptions;

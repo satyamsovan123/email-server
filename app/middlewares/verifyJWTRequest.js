@@ -3,9 +3,9 @@ const { logger, checkExistingUser } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
 const jwt = require("jsonwebtoken");
 
-const verifyJWT = async (req, res, next) => {
+const verifyJWTRequest = async (req, res, next) => {
   try {
-    logger("Inside JWT verification");
+    logger("Inside JWT verification middleware");
     const token = req.headers?.authorization?.split(" ")[1];
     const decodedData = jwt.verify(token, appConfig.jwtSecret);
     const existingUser = await checkExistingUser(decodedData?.email);
@@ -29,8 +29,9 @@ const verifyJWT = async (req, res, next) => {
       responseConstant.TOKEN_INVALID,
       statusCodeConstant.UNAUTHORIZED
     );
+    logger(["Error in JWT verification middleware", generatedResponse, error]);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };
 
-module.exports = { verifyJWT };
+module.exports = { verifyJWTRequest };

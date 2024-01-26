@@ -8,6 +8,7 @@ const { emailSender } = require("../utils/emailSender");
 
 const sendCampaignEmail = async (req, res) => {
   try {
+    logger(["Inside send campaign email"]);
     const userData = req.body;
 
     const mailOptions = campaignEmailGenerator(
@@ -17,9 +18,12 @@ const sendCampaignEmail = async (req, res) => {
       userData.appName
     );
 
+    logger(["Mail option", mailOptions]);
+
     const mail = await emailSender(mailOptions);
 
     if (!mail) {
+      logger(["Campaign email not sent"]);
       const generatedResponse = responseBuilder(
         {},
         responseConstant.EMAIL_NOT_SENT,
@@ -28,13 +32,12 @@ const sendCampaignEmail = async (req, res) => {
       return res.status(generatedResponse.code).send(generatedResponse);
     }
 
-    logger(["mailOptions", mailOptions]);
-
     const generatedResponse = responseBuilder(
       {},
       responseConstant.EMAIL_SENT,
       statusCodeConstant.SUCCESS
     );
+    logger(["Campaign email sent", generatedResponse]);
     return res.status(generatedResponse.code).send(generatedResponse);
   } catch (error) {
     const generatedResponse = responseBuilder(
@@ -42,7 +45,7 @@ const sendCampaignEmail = async (req, res) => {
       responseConstant.EMAIL_NOT_SENT,
       statusCodeConstant.ERROR
     );
-    logger(["sendcampaignemail", generatedResponse, error]);
+    logger(["Error in send campaign email", generatedResponse, error]);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };

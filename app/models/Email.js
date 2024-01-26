@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { appConfig } = require("../../configs/appConfig");
+// appConfig.expiresAfterMinutes;
 
 const emailSchema = new mongoose.Schema(
   {
@@ -10,7 +11,7 @@ const emailSchema = new mongoose.Schema(
     expireAt: {
       required: false,
       type: Date,
-      default: Date.now() + appConfig.expiresAfterMinutes * 60 * 1000,
+      default: () => Date.now() + appConfig.expiresAfterMinutes * 60 * 1000,
       index: { expires: 0 },
     },
   },

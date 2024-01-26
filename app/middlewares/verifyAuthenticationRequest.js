@@ -3,8 +3,9 @@ const { logger, checkExistingUser } = require("../../utils");
 const { responseBuilder } = require("../../utils/responseBuilder");
 const { AuthenticationValidator } = require("../validators");
 
-const verifyAuthenticationDataRequest = async (req, res, next) => {
+const verifyAuthenticationRequest = async (req, res, next) => {
   try {
+    logger(["Inside verify authentication data middleware"]);
     const userData = req.body;
     const currentPath = req.path.split("/")[1];
 
@@ -51,8 +52,13 @@ const verifyAuthenticationDataRequest = async (req, res, next) => {
       responseConstant.ERROR_OCCURRED_WHILE_VERIFYING,
       statusCodeConstant.ERROR
     );
+    logger([
+      "Error in verify authentication data middleware",
+      generatedResponse,
+      error,
+    ]);
     return res.status(generatedResponse.code).send(generatedResponse);
   }
 };
 
-module.exports = { verifyAuthenticationDataRequest };
+module.exports = { verifyAuthenticationRequest };

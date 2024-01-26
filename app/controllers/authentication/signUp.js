@@ -14,6 +14,7 @@ const {
 
 const signUp = async (req, res) => {
   try {
+    logger(["Inside sign up"]);
     const userData = req.body;
 
     const apiKey = generateAPIKey();
@@ -31,6 +32,7 @@ const signUp = async (req, res) => {
       responseConstant.SIGN_UP_SUCCESS,
       statusCodeConstant.SUCCESS
     );
+    logger(["Token generated - ", token, "API key - ", apiKey]);
     return res
       .setHeader(serverConstant.AUTHORIZATION_HEADER_KEY, `Bearer ${token}`)
       .status(generatedResponse.code)
@@ -41,7 +43,7 @@ const signUp = async (req, res) => {
       responseConstant.SIGN_UP_ERROR,
       statusCodeConstant.ERROR
     );
-    logger(["signup", generatedResponse, error]);
+    logger(["Error in sign up", generatedResponse, error]);
 
     return res.status(generatedResponse.code).send(generatedResponse);
   }

@@ -18,7 +18,7 @@ const appConfig = {
   jwtSecret: process.env.JWT_SECRET,
   jwtExpiresIn: process.env.JWT_EXPIRES_IN,
   bcryptSaltRounds: JSON.parse(process.env.BCRYPT_SALT_ROUNDS),
-  expiresAfterMinutes: JSON.parse(process.env.EXPIRES_AFTER_MINUTES || 1),
+  expiresAfterMinutes: JSON.parse(process.env.EXPIRES_AFTER_MINUTES),
   OTPLength: JSON.parse(process.env.OTP_LENGTH || 6),
   emailProvider: process.env.EMAIL_PROVIDER,
   emailUsername: process.env.EMAIL_ID,

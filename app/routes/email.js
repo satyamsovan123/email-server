@@ -8,17 +8,17 @@ const { sendOTP } = require("../controllers/email/emailVerification/sendOTP");
 const {
   verifyOTP,
 } = require("../controllers/email/emailVerification/verifyOTP");
-const { verifyAPIKey } = require("../middlewares/verifyAPIKey");
+const { verifyAPIKeyRequest } = require("../middlewares/verifyAPIKeyRequest");
 const { verifyOTPRequest } = require("../middlewares/verifyOTPRequest");
-const { verifyCampaignEmail } = require("../middlewares");
+const { verifyCampaignEmailRequest } = require("../middlewares");
 
 router.post(
   "/sendcampaignemail",
-  verifyCampaignEmail,
-  verifyAPIKey,
+  verifyCampaignEmailRequest,
+  verifyAPIKeyRequest,
   sendCampaignEmail
 );
-router.post("/sendotp", verifyOTPRequest, verifyAPIKey, sendOTP);
-router.post("/verifyotp", verifyOTPRequest, verifyAPIKey, verifyOTP);
+router.post("/sendotp", verifyOTPRequest, verifyAPIKeyRequest, sendOTP);
+router.post("/verifyotp", verifyOTPRequest, verifyAPIKeyRequest, verifyOTP);
 
 module.exports = router;
