@@ -22,7 +22,6 @@ const verifyOTP = async (req, res) => {
       receiver: userData.receiver,
       appName: userData.appName,
     });
-    console.log(existingData);
 
     // const existingData = await checkExistingOTP(
     //   userData.sender,
