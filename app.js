@@ -12,7 +12,7 @@ const webFrontendURL = appConfig.frontendURL;
 
 app.use(
   cors({
-    origin: webFrontendURL,
+    origin: [webFrontendURL],
     methods: ["POST"],
     exposedHeaders: [
       serverConstant.AUTHORIZATION_HEADER_KEY,
