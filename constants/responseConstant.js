@@ -37,7 +37,7 @@ const responseConstant = {
   VERIFICATION_CODE_VALID: "Verification code validated successfully.",
   VERIFICATION_CODE_INVALID: "Failed to validate verification code.",
   VERIFICATION_CODE_EXPIRED: "Verification code expired.",
-  FAILED_TO_VALIDATE_CODE: "Failed to validate code.",
+  FAILED_TO_VALIDATE_CODE: "Failed to validate verification code.",
 
   EMAIL_SENT: "Email sent successfully.",
   EMAIL_NOT_SENT: "Failed to send email.",

@@ -61,11 +61,9 @@ class OTPValidator {
           "string.empty": `${appConstant.APP_NAME} ${responseConstant.IS_EMPTY} ${responseConstant.PROVIDE_VALID_DATA}`,
           "any.required": `${appConstant.APP_NAME} ${responseConstant.IS_REQUIRED} ${responseConstant.PROVIDE_VALID_DATA}`,
         }),
-      otp: Joi.string()
-        .length(6)
+      otp: Joi.number()
         .optional()
         .messages({
-          "string.length": `${appConstant.OTP} ${responseConstant.IS_INVALID} ${responseConstant.PROVIDE_VALID_DATA}`,
           "string.empty": `${appConstant.OTP} ${responseConstant.IS_EMPTY} ${responseConstant.PROVIDE_VALID_DATA}`,
           "any.required": `${appConstant.OTP} ${responseConstant.IS_REQUIRED} ${responseConstant.PROVIDE_VALID_DATA}`,
         }),

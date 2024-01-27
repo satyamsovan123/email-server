@@ -17,7 +17,7 @@ const verifyOTP = async (req, res) => {
     logger(["Inside verify OTP"]);
     const userData = req.body;
 
-    const existingData = await Email.findOneAndDelete({
+    const existingData = await Email.findOne({
       sender: userData.sender,
       receiver: userData.receiver,
       appName: userData.appName,
@@ -35,7 +35,10 @@ const verifyOTP = async (req, res) => {
 
     const encryptedOTP = existingData.otp;
 
-    const verificationResult = await bcrypt.compare(userData.otp, encryptedOTP);
+    const verificationResult = await bcrypt.compare(
+      userData.otp.toString(),
+      encryptedOTP
+    );
 
     if (!verificationResult) {
       logger(["Invalid OTP"]);
@@ -46,6 +49,12 @@ const verifyOTP = async (req, res) => {
       );
       return res.status(generatedResponse.code).send(generatedResponse);
     }
+
+    await Email.deleteMany({
+      sender: userData.sender,
+      receiver: userData.receiver,
+      appName: userData.appName,
+    });
 
     const generatedResponse = responseBuilder(
       {},
