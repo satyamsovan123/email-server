@@ -1,5 +1,20 @@
 const dotenv = require("dotenv");
 require("dotenv").config();
+const fs = require("fs");
+const filePath = "VERSION";
+
+function getApplicationVersion() {
+  let versionString = "Version 0.0";
+  try {
+    const data = fs.readFileSync(filePath, "utf8");
+    const majorVersion = data.split("\n")[0].split("=")[1];
+    const minorVersion = data.split("\n")[1].split("=")[1];
+    versionString = `Version ${majorVersion}.${minorVersion}`;
+  } catch (error) {
+    console.error("Error reading file -", error);
+  }
+  return versionString;
+}
 
 if (process.env.NODE_ENV === "production") {
   dotenv.config({ path: ".env.prod" });
@@ -23,6 +38,7 @@ const appConfig = {
   emailProvider: process.env.EMAIL_PROVIDER,
   emailUsername: process.env.EMAIL_ID,
   emailPassword: process.env.PASSWORD,
+  version: getApplicationVersion(),
 };
 
 module.exports = { appConfig };

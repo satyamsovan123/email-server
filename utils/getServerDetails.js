@@ -6,9 +6,11 @@ function getServerDetails() {
   const appName = appConfig.appName;
   const frontendURL = appConfig.frontendURL;
   const backendURL = appConfig.backendURL;
+  const version = appConfig.version;
 
   const messages = [
     `Name - ${appName}`,
+    `Version - ${version}`,
     `Status - Server is running on port ${port} in ${environment} environment.`,
     `Using database - ${databaseName}`,
     `Frontend URL - ${frontendURL}`,
